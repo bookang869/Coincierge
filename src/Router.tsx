@@ -4,18 +4,18 @@ import Coin from "./routes/Coin";
 
 // path='/:BLANK' => a way to tell our URL will have a parameter
 function Router() {
-    return (
-        <BrowserRouter>
-            <Switch>
-                <Route path='/:coinId'>
-                    <Coin />
-                </Route>
-                <Route path='/'>
-                    <Coins />
-                </Route>
-            </Switch>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route path="/:coinId">
+          <Coin />
+        </Route>
+        <Route path="/">
+          <Coins />
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  );
 }
 
 export default Router;

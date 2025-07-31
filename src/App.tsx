@@ -1,6 +1,8 @@
-import Router from './Router';
-import { createGlobalStyle } from 'styled-components';
+import Router from "./Router";
+import { createGlobalStyle } from "styled-components";
 
+// define global CSS style in React App
+// removes default browser styles and add customized styles
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
   html, body, div, span, applet, object, iframe,
@@ -55,8 +57,8 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     font-family: 'Source Sans Pro', sans-serif;
-    background-color: ${props => props.theme.bgColor};
-    color: ${props => props.theme.textColor};
+    background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
     
   }
   a {
@@ -65,14 +67,16 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-// <></> : fragment => ghost component that allows you to return 
+// <></> : fragment => ghost component that allows you to return
 // many things that are next to each other without a parent
 // you should only return ONE element
 function App() {
-  return <>
-    <GlobalStyle />
-    <Router />
-  </>;
+  return (
+    <>
+      <GlobalStyle />
+      <Router />
+    </>
+  );
 }
 
 export default App;
