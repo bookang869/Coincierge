@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom"; // we use Link because "a href=" refreshes the page
 import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
+import { fetchCoins } from "../api";
 
 // padding => inner html ; margin => outer html
 const Container = styled.div`
@@ -53,7 +55,7 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
-interface CoinInterface {
+interface ICoin {
   id: string;
   name: string;
   symbol: string;
@@ -64,30 +66,22 @@ interface CoinInterface {
 }
 
 function Coins() {
-  const [coins, setCoins] = useState<CoinInterface[]>([]);
-  const [loading, setLoading] = useState(true);
-
   // make API call to fetch list of coins
-  useEffect(() => {
-    (async () => {
-      const json = await (
-        await fetch("https://api.coinpaprika.com/v1/coins")
-      ).json();
-      setCoins(json.splice(0, 100));
-      setLoading(false);
-    })();
-  }, []);
+
+  // useQuery(key, function) -> call fetchCoins functions and store json response into data
+  // react query keeps the data on cache, so when it goes back to the homescreen, there is no loading page
+  const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
 
   return (
     <Container>
       <Header>
-        <Title>코인</Title>
+        <Title>COINCIERGE</Title>
       </Header>
-      {loading ? (
+      {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <CoinsList>
-          {coins.map((coin) => (
+          {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
               <Link
                 to={{
