@@ -67,6 +67,7 @@ function Coins() {
   const [coins, setCoins] = useState<CoinInterface[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // make API call to fetch list of coins
   useEffect(() => {
     (async () => {
       const json = await (
