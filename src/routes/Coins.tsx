@@ -12,13 +12,16 @@ const Container = styled.div`
 `;
 
 const Header = styled.header`
-  height: 10vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  margin-bottom: 30px;
+  background-color: black;
 `;
 
-const CoinsList = styled.ul``;
+const CoinsList = styled.ul`
+  padding: 0 10px;
+`;
 
 // display: block; // allows user to click anywhere on the container not just where the link is
 const Coin = styled.li`
@@ -40,9 +43,27 @@ const Coin = styled.li`
 `;
 
 const Title = styled.h1`
+  margin-top: 30px;
   font-size: 48px;
   font-family: "Cinzel", serif;
   color: ${(props) => props.theme.accentColor};
+  margin-bottom: 5px;
+`;
+
+const HomeImg = styled.img`
+  width: 120px;
+  height: 120px;
+  margin-bottom: 10px;
+  border-radius: 25px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.25);
+`;
+
+const Slogan = styled.h3`
+  font-size: 16px;
+  font-family: "Cinzel", serif;
+  color: ${(props) => props.theme.accentColor};
+  font-weight: 300;
+  margin-bottom: 20px;
 `;
 
 const Loader = styled.div`
@@ -73,32 +94,36 @@ function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
 
   return (
-    <Container>
+    <>
       <Header>
         <Title>COINCIERGE</Title>
+        <HomeImg src="../img/home-image.png" />
+        <Slogan>Your personal coin assistant.</Slogan>
       </Header>
-      {isLoading ? (
-        <Loader>Loading...</Loader>
-      ) : (
-        <CoinsList>
-          {data?.slice(0, 100).map((coin) => (
-            <Coin key={coin.id}>
-              <Link
-                to={{
-                  pathname: `/${coin.id}`,
-                  state: { name: coin.name },
-                }}
-              >
-                <Img
-                  src={`https://cryptocurrencyliveprices.com/img/${coin.id}.png`}
-                />
-                {coin.name}&rarr;
-              </Link>
-            </Coin>
-          ))}
-        </CoinsList>
-      )}
-    </Container>
+      <Container>
+        {isLoading ? (
+          <Loader>Loading...</Loader>
+        ) : (
+          <CoinsList>
+            {data?.slice(0, 100).map((coin) => (
+              <Coin key={coin.id}>
+                <Link
+                  to={{
+                    pathname: `/${coin.id}`,
+                    state: { name: coin.name },
+                  }}
+                >
+                  <Img
+                    src={`https://cryptocurrencyliveprices.com/img/${coin.id}.png`}
+                  />
+                  {coin.name}&rarr;
+                </Link>
+              </Coin>
+            ))}
+          </CoinsList>
+        )}
+      </Container>
+    </>
   );
 }
 
