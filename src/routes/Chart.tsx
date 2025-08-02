@@ -18,21 +18,33 @@ interface iData {
 }
 
 function Chart({ coinId }: ChartProps) {
-  const { isLoading, data } = useQuery<iData[]>(["ohlcv", coinId], () =>
-    fetchCoinHistory(coinId)
+  const { isLoading, data } = useQuery<iData[]>(
+    ["ohlcv", coinId],
+    () => fetchCoinHistory(coinId),
+    {
+      refetchInterval: 10000,
+    }
   );
+
   return (
     <div>
       {isLoading ? (
         "Loading..."
       ) : (
         <ApexChart
-          type="line"
+          type="candlestick"
           series={[
             {
-              name: "Price",
-              // ?? [] prevents data from being null
-              data: data?.map((price) => parseFloat(price.close)) ?? [],
+              data:
+                data?.map((price) => ({
+                  x: new Date(price.time_close * 1000),
+                  y: [
+                    parseFloat(price.open),
+                    parseFloat(price.high),
+                    parseFloat(price.low),
+                    parseFloat(price.close),
+                  ],
+                })) ?? [],
             },
           ]}
           options={{
@@ -46,37 +58,19 @@ function Chart({ coinId }: ChartProps) {
               },
               background: "transparent",
             },
-            stroke: { curve: "smooth", width: 3 },
+            stroke: { curve: "smooth", width: 1 },
             grid: { show: false },
             // remove x axis
             xaxis: {
-              labels: {
-                show: false,
-              },
-              axisBorder: {
-                show: false,
-              },
-              axisTicks: {
-                show: false,
-              },
               type: "datetime",
-              categories: data?.map((price) =>
-                new Date(price.time_close * 1000).toUTCString()
-              ),
+              labels: { show: false },
+              axisBorder: { show: false },
+              axisTicks: { show: false },
             },
             // remove y-axis
             yaxis: {
               show: false,
             },
-            // apply gradient to the color scheme of graph
-            fill: {
-              type: "gradient",
-              gradient: {
-                gradientToColors: ["blue"],
-                stops: [0, 100],
-              },
-            },
-            colors: ["red"],
             tooltip: {
               y: {
                 formatter: (value) => `$${value.toFixed(2)}`,
