@@ -15,8 +15,7 @@ const Header = styled.header`
   height: 10vh;
   display: flex;
   justify-content: center;
-  align-itmes: center;
-  margin-top: 10px;
+  align-items: center;
 `;
 
 const CoinsList = styled.ul``;
@@ -42,6 +41,7 @@ const Coin = styled.li`
 
 const Title = styled.h1`
   font-size: 48px;
+  font-family: "Cinzel", serif;
   color: ${(props) => props.theme.accentColor};
 `;
 

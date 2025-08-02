@@ -14,7 +14,31 @@ import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
 
-// const Home = style.
+const HomeContainer = styled.div`
+  position: absolute;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #a89e90;
+  border-radius: 25px;
+  a {
+    transition: color 0.2s ease-in;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+  }
+  &:hover {
+    background-color: ${(props) => props.theme.accentColor};
+  }
+`;
+
+const HomeImage = styled.img`
+  width: 35px;
+  height: 35px;
+`;
 
 const Container = styled.div`
   padding: 0px 20px; // padding: vertically horizontally
@@ -27,8 +51,9 @@ const Header = styled.header`
   height: 15vh;
   display: flex;
   justify-content: center;
-  align-itmes: center;
+  align-items: center;
   margin-top: 10px;
+  position: relative;
 `;
 
 const Title = styled.h1`
@@ -180,6 +205,11 @@ function Coin() {
         </Title>
       </Helmet>
       <Header>
+        <HomeContainer>
+          <Link to={"/"}>
+            <HomeImage src="/img/home.png" />
+          </Link>
+        </HomeContainer>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
@@ -217,11 +247,11 @@ function Coin() {
       )}
 
       <Tabs>
-        <Tab isActive={priceMatch !== null}>
-          <Link to={`/${coinId}/price`}>Price</Link>
-        </Tab>
         <Tab isActive={chartMatch !== null}>
           <Link to={`/${coinId}/chart`}>Chart</Link>
+        </Tab>
+        <Tab isActive={priceMatch !== null}>
+          <Link to={`/${coinId}/price`}>Price</Link>
         </Tab>
       </Tabs>
 
