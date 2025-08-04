@@ -35,8 +35,5 @@ jobs:
           AWS_REGION: ap-southeast-2
           SOURCE_DIR: build
 
-      - name: Deploy to S3
-        run: aws s3 sync build/ s3://YOUR_BUCKET_NAME --acl public-read
-
       - name: Invalidate CloudFront Cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"

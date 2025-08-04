@@ -7,7 +7,6 @@ import {
 } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
 import Price from "./Price";
 import Chart from "./Chart";
 import { useQuery } from "react-query";

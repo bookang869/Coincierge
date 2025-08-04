@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom"; // we use Link because "a href=" refreshes the page
-import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import { fetchCoins } from "../api";
 
